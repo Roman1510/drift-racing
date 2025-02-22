@@ -9,7 +9,7 @@ export const Car = () => {
   const [pos, setPos] = useState({ x: 1000, y: 1000, rotation: 0 });
   const { getControlsDirection } = useControls();
   const world = useRef(new p2.World({ gravity: [0, 0] }));
-  const body = useRef<p2.Body | null>(null);
+  const carBody = useRef<p2.Body | null>(null);
 
   const PHYS = {
     width: 100, height: 40, mass: 3,
@@ -27,7 +27,7 @@ export const Car = () => {
     const car = new p2.Body({ mass: PHYS.mass, position: [1000, 1000] });
     car.addShape(new p2.Box({ width: PHYS.width, height: PHYS.height }));
     world.current.addBody(car);
-    body.current = car;
+    carBody.current = car;
 
     return () => {
       world.current.removeBody(car);
@@ -35,8 +35,8 @@ export const Car = () => {
   }, []);
 
   useTick((delta) => {
-    if (!body.current) return;
-    const car = body.current;
+    if (!carBody.current) return;
+    const car = carBody.current;
     const { pressedKeys } = getControlsDirection()
     const isUp = pressedKeys.includes('UP');
     const isDown = pressedKeys.includes('DOWN');
