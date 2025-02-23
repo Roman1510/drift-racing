@@ -7,9 +7,9 @@ import { useControls } from "../../hooks/useControls";
 
 export const Car = () => {
   const [pos, setPos] = useState({ x: 1000, y: 1000, rotation: 0 });
-  const { getControlsDirection } = useControls();
   const world = useRef(new p2.World({ gravity: [0, 0] }));
   const carBody = useRef<p2.Body | null>(null);
+  const { getControlsDirection } = useControls();
 
   const PHYS = {
     width: 100, height: 40, mass: 3,
