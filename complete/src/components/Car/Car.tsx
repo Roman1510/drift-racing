@@ -6,7 +6,7 @@ import carAsset from '../../assets/RACECAR.png';
 import { useControls } from "../../hooks/useControls";
 
 export const Car = () => {
-  const [pos, setPos] = useState({ x: 1000, y: 1000, rotation: 0 });
+  const [pos, setPos] = useState({ x: 0, y: 0, rotation: 0 });
   const world = useRef(new p2.World({ gravity: [0, 0] }));
   const carBody = useRef<p2.Body | null>(null);
   const { getControlsDirection } = useControls();
@@ -24,7 +24,7 @@ export const Car = () => {
   const texture = useMemo(() => Texture.from(carAsset), []);
 
   useEffect(() => {
-    const car = new p2.Body({ mass: PHYS.mass, position: [1000, 1000] });
+    const car = new p2.Body({ mass: PHYS.mass, position: [100, 100] });
     car.addShape(new p2.Box({ width: PHYS.width, height: PHYS.height }));
     world.current.addBody(car);
     carBody.current = car;
