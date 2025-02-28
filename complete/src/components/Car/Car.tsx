@@ -16,8 +16,8 @@ export const Car = () => {
     steer: 35 * (Math.PI / 180), wheel: 100,
     engine: 900, brake: -700,
     grip: { drift: 0.3, normal: 3, lateral: 5 },
-    drag: 0.3, max: 1000,
-    drift: { min: 300, factor: 0.3 },
+    drag: { factor: 0.3, max: 1000 },
+    drift: { factor: 0.3, min: 300, },
     step: 1 / 60, subs: 10
   };
 
@@ -72,11 +72,11 @@ export const Car = () => {
     const isDrifting = engine > 0 &&
       steerInput !== 0 &&
       speed > PHYS.drift.min &&
-      (speed / PHYS.max) > PHYS.drift.factor;
+      (speed / PHYS.drag.max) > PHYS.drift.factor;
 
     // Lateral
     const lat = p2.vec2.dot(vel, right);
-    const grip = isDrifting ? PHYS.grip.drift * (1 + speed / PHYS.max) : PHYS.grip.normal;
+    const grip = isDrifting ? PHYS.grip.drift * (1 + speed / PHYS.drag.max) : PHYS.grip.normal;
     car.applyForce([
       -right[0] * lat * PHYS.grip.lateral * grip,
       -right[1] * lat * PHYS.grip.lateral * grip
@@ -85,8 +85,8 @@ export const Car = () => {
     // Drag 
     if (!engine) {
       car.applyForce([
-        -forward[0] * fwdSpeed * PHYS.drag,
-        -forward[1] * fwdSpeed * PHYS.drag
+        -forward[0] * fwdSpeed * PHYS.drag.max,
+        -forward[1] * fwdSpeed * PHYS.drag.max
       ]);
     }
 
