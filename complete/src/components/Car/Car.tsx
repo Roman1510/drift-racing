@@ -85,8 +85,8 @@ export const Car = () => {
     // Drag 
     if (!engine) {
       car.applyForce([
-        -forward[0] * fwdSpeed * PHYS.drag.max,
-        -forward[1] * fwdSpeed * PHYS.drag.max
+        -forward[0] * fwdSpeed * PHYS.drag.factor,
+        -forward[1] * fwdSpeed * PHYS.drag.factor
       ]);
     }
 
